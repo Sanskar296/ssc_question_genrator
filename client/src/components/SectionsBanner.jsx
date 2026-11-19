@@ -57,16 +57,16 @@ export default function SectionsBanner({ sectionsData }) {
   };
 
   return (
-    <div style={{ marginBottom: '2rem' }}>
+    <div style={{ marginBottom: '1.5rem' }}>
       {/* Black & White Directive Notice Box */}
       <div className="notice-box">
-        <Info size={20} style={{ shrink: 0, marginTop: '2px', color: '#ffffff' }} />
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+        <Info size={20} style={{ flexShrink: 0, marginTop: '2px', color: '#ffffff' }} />
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px', flexWrap: 'wrap' }}>
             <span style={{ fontWeight: 700, fontSize: '0.85rem' }}>Curriculum Directive:</span>
             <span className="badge badge-active">General Awareness Active Focus</span>
           </div>
-          <p style={{ fontSize: '0.78rem', color: '#a3a3a3', lineHeight: 1.6 }}>
+          <p style={{ fontSize: '0.78rem', color: '#a3a3a3', lineHeight: 1.6, wordBreak: 'break-word' }}>
             While English, General Intelligence, and Quantitative Aptitude sections are listed, <strong>General Awareness is the primarily active focus right now</strong>. The question bank is exclusively powered by the <strong>Lucent GK book (672 pages)</strong> and <strong>12,968 verified previous year questions</strong> indexed with ChromaDB vector embeddings.
           </p>
         </div>

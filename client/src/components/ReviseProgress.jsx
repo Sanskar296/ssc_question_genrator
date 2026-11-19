@@ -101,17 +101,17 @@ export default function ReviseProgress({ user, onAttemptRecorded }) {
         </div>
 
         {/* Quick summary stats */}
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <div className="badge badge-outline" style={{ padding: '6px 12px', fontSize: '0.75rem' }}>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <div className="badge badge-outline" style={{ padding: '6px 10px', fontSize: '0.72rem' }}>
             Total: <strong style={{ marginLeft: 4 }}>{attemptedList.length}</strong>
           </div>
-          <div className="badge badge-outline" style={{ padding: '6px 12px', fontSize: '0.75rem', borderColor: 'var(--border-subtle)' }}>
+          <div className="badge badge-outline" style={{ padding: '6px 10px', fontSize: '0.72rem' }}>
             Correct: <strong style={{ marginLeft: 4 }}>{correctCount}</strong>
           </div>
-          <div className="badge badge-outline" style={{ padding: '6px 12px', fontSize: '0.75rem' }}>
+          <div className="badge badge-outline" style={{ padding: '6px 10px', fontSize: '0.72rem' }}>
             Incorrect: <strong style={{ marginLeft: 4 }}>{incorrectCount}</strong>
           </div>
-          <div className="badge badge-outline" style={{ padding: '6px 12px', fontSize: '0.75rem', fontWeight: 700 }}>
+          <div className="badge badge-outline" style={{ padding: '6px 10px', fontSize: '0.72rem', fontWeight: 700 }}>
             <Award size={12} style={{ marginRight: 4 }} /> {accuracyPct}% Accuracy
           </div>
         </div>
@@ -239,7 +239,7 @@ export default function ReviseProgress({ user, onAttemptRecorded }) {
                 </div>
 
                 {/* 4 Options Grid */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '8px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: '8px' }}>
                   {item.options &&
                     Object.entries(item.options).map(([optKey, optText]) => {
                       const isSelected = currentSelected === optKey;

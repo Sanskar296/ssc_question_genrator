@@ -77,14 +77,23 @@ html, body {
   min-height: 100vh;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Layout Container */
 .container {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 0.85rem;
+  }
 }
 
 /* ==========================================
@@ -103,7 +112,16 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
+  min-height: 64px;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .header-inner {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    min-height: 56px;
+  }
 }
 
 .brand {
@@ -152,6 +170,12 @@ html, body {
   border-radius: 9999px;
   font-size: 0.75rem;
   transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+@media (max-width: 900px) {
+  .focus-pill {
+    display: none;
+  }
 }
 
 .dot-indicator {
@@ -344,14 +368,17 @@ html, body {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.75rem;
   border-bottom: 1px solid var(--border-subtle);
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
 }
 
 .tab-group {
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
+  width: auto;
+  max-width: 100%;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
@@ -362,8 +389,9 @@ html, body {
 .tab-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 8px 16px;
+  padding: 8px 14px;
   font-size: 0.8rem;
   font-weight: 600;
   border-radius: var(--radius-sm);
@@ -372,6 +400,45 @@ html, body {
   border: none;
   cursor: pointer;
   transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .tab-group {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .tab-btn {
+    padding: 8px 6px;
+    font-size: 0.72rem;
+    gap: 4px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .tab-btn .badge {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .tab-group {
+    grid-template-columns: 1fr;
+  }
+
+  .tab-btn {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+
+  .tab-btn .badge {
+    display: inline-flex;
+    margin-left: auto;
+  }
 }
 
 .tab-btn:hover {
@@ -390,6 +457,22 @@ html, body {
   display: flex;
   gap: 8px;
   align-items: center;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .input-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .input-group > div {
+    width: 100%;
+  }
+
+  .input-group .btn {
+    width: 100%;
+  }
 }
 
 .input {
@@ -437,6 +520,15 @@ html, body {
   margin-top: 8px;
 }
 
+@media (max-width: 600px) {
+  .chip-container {
+    max-height: 140px;
+    overflow-y: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+}
+
 .chip {
   padding: 4px 10px;
   font-size: 0.72rem;
@@ -470,6 +562,15 @@ html, body {
   padding: 1.5rem;
   margin-bottom: 1rem;
   transition: background-color 0.2s ease, border-color 0.2s ease;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 600px) {
+  .question-card {
+    padding: 1rem;
+    border-radius: var(--radius-md);
+  }
 }
 
 .question-header {
@@ -577,6 +678,15 @@ html, body {
   position: relative;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
   transition: background-color 0.2s ease, border-color 0.2s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@media (max-width: 600px) {
+  .modal-dialog {
+    padding: 1.25rem;
+    border-radius: var(--radius-lg);
+  }
 }
 
 .modal-close {
@@ -614,6 +724,12 @@ html, body {
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   margin: 1rem 0;
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .stat-item {
@@ -670,4 +786,73 @@ html, body {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* ==========================================
+   Comprehensive Mobile & Touch Optimization
+   ========================================== */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .brand-title {
+    font-size: 0.95rem;
+  }
+
+  .brand-subtitle {
+    display: none;
+  }
+
+  .header {
+    position: relative;
+  }
+
+  .btn {
+    padding: 7px 12px;
+    font-size: 0.78rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .notice-box {
+    padding: 0.85rem;
+    gap: 8px;
+    flex-direction: column;
+  }
+
+  .notice-box > div {
+    width: 100%;
+  }
+
+  /* Question options on mobile: full width, finger-friendly touch target */
+  .option-button {
+    padding: 10px 12px;
+    font-size: 0.82rem;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-inner {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .brand-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .theme-toggle-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .badge {
+    font-size: 0.62rem;
+    padding: 2px 5px;
+  }
 }

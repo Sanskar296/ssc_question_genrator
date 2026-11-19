@@ -96,7 +96,7 @@ export default function App() {
         onToggleTheme={toggleTheme}
       />
 
-      <main className="container" style={{ flex: 1, padding: '2rem 1.5rem' }}>
+      <main className="container" style={{ flex: 1, padding: '1.25rem 0' }}>
         {/* Sections Banner with active focus on General Awareness */}
         <SectionsBanner sectionsData={sectionsData} />
 
