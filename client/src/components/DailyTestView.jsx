@@ -20,7 +20,10 @@ import { api } from '../api';
 
 export default function DailyTestView({
   user,
+  onOpenAuth,
+  onTestCompleted,
   onTestSubmitted,
+  onBackToDashboard,
   onNavigateDashboard
 }) {
   const [testData, setTestData] = useState(null);
@@ -108,7 +111,8 @@ export default function DailyTestView({
       const durationSeconds = 1800 - timeLeft;
       const res = await api.submitDailyTest(testData._id, answers, durationSeconds);
       setResult(res);
-      if (onTestSubmitted) onTestSubmitted();
+      if (onTestSubmitted) onTestSubmitted(res);
+      if (onTestCompleted) onTestCompleted(res);
     } catch (err) {
       alert(err.message || 'Error submitting daily test');
     } finally {
@@ -398,56 +402,42 @@ export default function DailyTestView({
           {/* Palette Legend */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', fontSize: '0.68rem', color: 'var(--text-muted)', marginBottom: '12px', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '2px', background: 'var(--text-main)' }}></span>
+              <span style={{ width: '10px', height: '10px', borderRadius: '2px', background: '#2563eb' }}></span>
               <span>Answered</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '2px', background: 'transparent', border: '1px solid var(--border-subtle)' }}></span>
+              <span style={{ width: '10px', height: '10px', borderRadius: '2px', background: 'var(--bg-subtle)', border: '1px solid var(--border-subtle)' }}></span>
               <span>Unanswered</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <span style={{ width: '10px', height: '10px', borderRadius: '2px', border: '2px solid #2563eb' }}></span>
+              <span>Current</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <span style={{ width: '10px', height: '10px', borderRadius: '2px', background: '#f59e0b' }}></span>
+              <span>Flagged</span>
             </div>
           </div>
 
           {/* 30 Number Buttons */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '6px' }}>
+          <div className="question-palette-grid">
             {questions.map((q, idx) => {
               const isAnswered = !!answers[q.id];
               const isCurrent = idx === currentQIndex;
               const isFlagged = flaggedIds.has(q.id);
 
-              let bg = 'var(--bg-main)';
-              let color = 'var(--text-muted)';
-              let border = '1px solid var(--border-subtle)';
-
-              if (isAnswered) {
-                bg = 'var(--text-main)';
-                color = 'var(--bg-main)';
-                border = '1px solid var(--text-main)';
-              }
-              if (isCurrent) {
-                border = '2px solid var(--border-strong)';
-              }
+              let paletteClass = 'palette-btn';
+              if (isAnswered) paletteClass += ' answered';
+              if (isCurrent) paletteClass += ' current';
+              if (isFlagged) paletteClass += ' flagged';
 
               return (
                 <button
                   key={idx}
                   onClick={() => setCurrentQIndex(idx)}
-                  style={{
-                    height: '32px',
-                    borderRadius: '4px',
-                    background: bg,
-                    color: color,
-                    border: border,
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    position: 'relative'
-                  }}
-                  className="mono"
+                  className={`${paletteClass} mono`}
                 >
                   {idx + 1}
-                  {isFlagged && (
-                    <span style={{ position: 'absolute', top: 2, right: 2, width: 4, height: 4, borderRadius: '50%', background: '#ffa726' }}></span>
-                  )}
                 </button>
               );
             })}

@@ -25,7 +25,7 @@ export default function App() {
   const [gamification, setGamification] = useState({ points: 0, current_streak: 0, badges: [] });
 
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('study_theme') || 'dark';
+    return localStorage.getItem('study_theme') || 'light';
   });
 
   useEffect(() => {
