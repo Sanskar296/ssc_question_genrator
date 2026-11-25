@@ -106,6 +106,60 @@ export const api = {
     return request(`/user/attempted-questions/${questionId}`, {
       method: 'DELETE'
     });
+  },
+
+  // English Module APIs
+  getEnglishTopics: async () => {
+    return request('/english/topics');
+  },
+
+  searchEnglishPYQs: async (query = '', topicFilter = null, nResults = 500) => {
+    const params = new URLSearchParams({ n_results: nResults });
+    if (query) params.append('query', query);
+    if (topicFilter) params.append('topic_filter', topicFilter);
+    return request(`/english/search?${params.toString()}`);
+  },
+
+  // Dashboard & Gamification APIs
+  getDashboardSummary: async () => {
+    return request('/dashboard/summary');
+  },
+
+  acknowledgePenalty: async (activityDate) => {
+    return request('/dashboard/acknowledge-penalty', {
+      method: 'POST',
+      body: JSON.stringify({ activity_date: activityDate })
+    });
+  },
+
+  getGamificationProgress: async () => {
+    return request('/gamification/progress');
+  },
+
+  // Daily Test System APIs
+  getTodayDailyTest: async () => {
+    return request('/daily-test/today');
+  },
+
+  startDailyTest: async () => {
+    return request('/daily-test/start', {
+      method: 'POST'
+    });
+  },
+
+  submitDailyTest: async (dailyTestId, answers, durationSeconds = 0) => {
+    return request('/daily-test/submit', {
+      method: 'POST',
+      body: JSON.stringify({
+        daily_test_id: dailyTestId,
+        answers,
+        duration_seconds: durationSeconds
+      })
+    });
+  },
+
+  getDailyTestHistory: async () => {
+    return request('/daily-test/history');
   }
 };
 

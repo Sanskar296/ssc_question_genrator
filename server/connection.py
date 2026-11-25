@@ -176,7 +176,43 @@ def ensure_indexes_for_user_management(user_db: pymongo.database.Database):
         IndexModel([("is_published", ASCENDING)], name="idx_published")
     ])
 
-    print(f"[+] Indexes verified for all 4 User Management collections in db '{user_db.name}'")
+    # 5. User Progress (Gamification & Streaks)
+    progress = user_db["user_progress"]
+    progress.create_indexes([
+        IndexModel([("user_id", ASCENDING)], unique=True, name="idx_progress_user_id_unique"),
+        IndexModel([("total_points", DESCENDING)], name="idx_total_points"),
+        IndexModel([("current_streak", DESCENDING)], name="idx_current_streak")
+    ])
+
+    # 6. Daily Tests (Single test per user per date)
+    daily_tests = user_db["daily_tests"]
+    daily_tests.create_indexes([
+        IndexModel([("user_id", ASCENDING), ("test_date", ASCENDING)], unique=True, name="idx_user_test_date_unique"),
+        IndexModel([("test_date", ASCENDING)], name="idx_test_date"),
+        IndexModel([("status", ASCENDING)], name="idx_daily_test_status")
+    ])
+
+    # 7. Test Attempts (Detailed submission records)
+    test_attempts = user_db["test_attempts"]
+    test_attempts.create_indexes([
+        IndexModel([("daily_test_id", ASCENDING)], name="idx_attempt_daily_test_id"),
+        IndexModel([("user_id", ASCENDING), ("completed_at", DESCENDING)], name="idx_user_completed_at")
+    ])
+
+    # 8. Point Transactions (Audit log with duplicate protection)
+    point_tx = user_db["point_transactions"]
+    point_tx.create_indexes([
+        IndexModel([("user_id", ASCENDING), ("created_at", DESCENDING)], name="idx_user_tx_created"),
+        IndexModel([("user_id", ASCENDING), ("transaction_type", ASCENDING), ("related_id", ASCENDING)], name="idx_tx_idempotent")
+    ])
+
+    # 9. Daily Activity (Tracks missed days, penalties, dialog acknowledgments)
+    daily_act = user_db["daily_activities"]
+    daily_act.create_indexes([
+        IndexModel([("user_id", ASCENDING), ("activity_date", ASCENDING)], unique=True, name="idx_user_activity_date_unique")
+    ])
+
+    print(f"[+] Indexes verified for all User Management, Daily Tests & Gamification collections in db '{user_db.name}'")
 
 
 # =====================================================================

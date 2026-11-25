@@ -1,30 +1,46 @@
 import React from 'react';
-import { BookOpen, LogIn, LogOut, User, Sun, Moon } from 'lucide-react';
+import { BookOpen, LogIn, LogOut, User, Sun, Moon, Menu } from 'lucide-react';
 
-export default function Navbar({ user, onOpenAuth, onOpenProfile, onLogout, theme, onToggleTheme }) {
+export default function Navbar({
+  user,
+  onOpenAuth,
+  onOpenProfile,
+  onLogout,
+  theme,
+  onToggleTheme,
+  onToggleMobileNav
+}) {
   return (
     <header className="header">
       <div className="container header-inner">
-        {/* Brand */}
-        <div className="brand">
-          <div className="brand-icon">
-            <BookOpen size={18} />
-          </div>
-          <div>
-            <div className="brand-title">
-              <span>Daily Pratice</span>
-              <span className="badge badge-outline">SSC CHSL</span>
+        {/* Left: Mobile hamburger & Brand */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          {onToggleMobileNav && (
+            <button
+              onClick={onToggleMobileNav}
+              className="mobile-nav-toggle"
+              aria-label="Open Navigation Menu"
+              title="Open Navigation"
+            >
+              <Menu size={18} />
+            </button>
+          )}
+
+          <div className="brand">
+            <div className="brand-icon">
+              <BookOpen size={18} />
             </div>
-            <div className="brand-subtitle">Intelligent Study & Question Retrieval</div>
+            <div>
+              <div className="brand-title">
+                <span>Daily Pratice</span>
+                <span className="badge badge-outline">SSC CHSL</span>
+              </div>
+              <div className="brand-subtitle">Intelligent Study & Question Retrieval</div>
+            </div>
           </div>
         </div>
 
-        {/* Center Pill: Focus Indicator */}
-        <div className="focus-pill">
-          <span className="dot-indicator"></span>
-          <span className="text-muted">Active Focus:</span>
-          <strong>General Awareness (Lucent GK + PYQs)</strong>
-        </div>
+
 
         {/* User Account & Theme Controls */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
